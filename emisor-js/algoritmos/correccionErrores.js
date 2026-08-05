@@ -9,7 +9,11 @@
  * @returns {number} menor r tal que m + r + 1 <= 2^r
  */
 export function hammingCalcularR(m) {
-  throw new Error("TODO: implementar hammingCalcularR");
+  let r = 1;
+  while (m + r + 1 > Math.pow(2, r)) {
+    r++;
+  }
+  return r;
 }
 
 /**
@@ -18,7 +22,20 @@ export function hammingCalcularR(m) {
  * @returns {string} palabra código completa (codeword)
  */
 export function hammingCodificar(bits) {
-  throw new Error("TODO: implementar hammingCodificar");
+  const m = bits.length;
+  const r = hammingCalcularR(m);
+  let codeword = "";
+  let i = 0;
+  let j = 0;
+  for (let k = 1; k <= m + r; k++) {
+    if (Math.log2(k) % 1 === 0) {
+      codeword += "0";
+    } else {
+      codeword += bits[i];
+      i++;
+    }
+  }
+  return codeword;
 }
 
 /**
@@ -27,5 +44,17 @@ export function hammingCodificar(bits) {
  *          posicionError = 0 si no hubo error; el mensaje ya viene corregido.
  */
 export function hammingDecodificar(codeword) {
-  throw new Error("TODO: implementar hammingDecodificar");
+  const m = codeword.length;
+  const r = hammingCalcularR(m);
+  let mensajeSinParidad = "";
+  let hayError = false;
+  let posicionError = 0;
+  for (let k = 1; k <= m; k++) {
+    if (Math.log2(k) % 1 === 0) {
+      // Es una posición de paridad
+    } else {
+      mensajeSinParidad += codeword[k - 1];
+    }
+  }
+  return [mensajeSinParidad, hayError, posicionError];
 }
