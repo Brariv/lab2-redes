@@ -28,8 +28,8 @@ def verificar_integridad(trama_recibida, algoritmo, bloque=8):
         tuple(bool, str): (hay_error, trama_sin_redundancia).
     """
     if algoritmo == "hamming":
-        _, hay_error, _ = correccion.hamming_decodificar(trama_recibida)
-        return hay_error, trama_recibida
+        mensaje, hay_error, _ = correccion.hamming_decodificar(trama_recibida)
+        return hay_error, mensaje
     if algoritmo == "fletcher":
         ok = deteccion.fletcher_verificar(trama_recibida, bloque)
         return (not ok), trama_recibida[:-2 * bloque]
